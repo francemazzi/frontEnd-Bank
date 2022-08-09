@@ -18,8 +18,7 @@ const closeModal = function () {
   overlay.classList.add('hidden');
 };
 
-for (let i = 0; i < btnsOpenModal.length; i++)
-  btnsOpenModal[i].addEventListener('click', openModal);
+btnsOpenModal.forEach(btn => btn.addEventListener('click', openModal));
 
 btnCloseModal.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
@@ -29,3 +28,29 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+///////////////////////////////////////////
+
+//SELEZIONE DI ELEMENTI
+//Se vogliamo selezionare una certa parte del codice document.
+console.log(document.body);
+const header = document.querySelector('header');
+const allSelection = document.querySelectorAll('.section');
+
+document.getElementById('section--1');
+const button = document.getElementsByTagName('button');
+
+//Messaggio cookie
+const messaggio = document.createElement('div');
+messaggio.classList.add('cookie-message');
+
+messaggio.innerHTML =
+  'Ti piacciono i cookies? 🍪 <button class= " btn btn--close-cookie" >Si!</button>';
+
+header.prepend(messaggio);
+
+document
+  .querySelector('.btn--close-cookie')
+  .addEventListener('click', function () {
+    messaggio.remove();
+  });
