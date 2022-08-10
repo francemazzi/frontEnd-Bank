@@ -45,7 +45,7 @@ const messaggio = document.createElement('div');
 messaggio.classList.add('cookie-message');
 
 messaggio.innerHTML =
-  'Ti piacciono i cookies? 🍪 <button class= " btn btn--close-cookie" >Si!</button>';
+  'Ti piacciono i cookies? 🍪 <button class= " btn btn--close-cookie" >Si!</button><button class= " btn btn--close-cookie" >No</button>';
 
 header.prepend(messaggio);
 
@@ -54,3 +54,10 @@ document
   .addEventListener('click', function () {
     messaggio.remove();
   });
+
+//per modificare lo stile di un certo elemento bisogna invocarlo --> funziona solo per lo stile 'inline'
+messaggio.style.backgroundColor = '#37383d';
+messaggio.style.width = '120%';
+
+messaggio.style.height =
+  Number.parseFloat(getComputedStyle(messaggio).height, 10) + 40 + 'px';
