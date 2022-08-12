@@ -74,6 +74,20 @@ nav.addEventListener('mouseover', handleHover.bind(0.5));
 
 nav.addEventListener('mouseout', handleHover.bind(1));
 
+//Navigazione sticky
+//Otteniamo le  coordinate dell'area top della pagina
+const coordinateIniziali = section1.getBoundingClientRect();
+window.addEventListener('scroll', function (e) {
+  //Mostra la dinstanza tra il top della pagina e il punto della pagina in alto in pratica ci da un riferimento verticale di dove siamo
+  console.log(window.scrollY);
+
+  if (window.scrollY > coordinateIniziali.top) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+});
+
 ///////////////////////////////////////////
 ///////////////////////////////////////////
 
