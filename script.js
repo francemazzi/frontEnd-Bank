@@ -2,9 +2,16 @@
 
 ///////////////////////////////////////
 // Modal window
+const header = document.querySelector('header');
+const allSelection = document.querySelectorAll('.section');
+const section1 = document.querySelector('#section--1');
+const nav = document.querySelector('.nav');
 
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
+
+const button = document.getElementsByTagName('button');
+const btnScrollTo = document.querySelector('.btn--scroll-to');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
@@ -29,16 +36,49 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
+//Funzione scroll header iniziale learn more
+
+btnScrollTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+///////////////////////////////////////////
+//Navigazione Pagina
+
+document.querySelector('body').addEventListener('click', function (e) {
+  //HEADER --> nav__link
+  if (e.target.classList.contains('nav__link')) {
+    e.preventDefault();
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
+});
+//Menu animazione fade
+
+const handleHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
+
+    siblings.forEach(el => {
+      if (el !== link) el.style.opacity = this;
+    });
+    logo.style.opacity = this;
+  }
+};
+
+//Passare argomento nell'handler
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+
+nav.addEventListener('mouseout', handleHover.bind(1));
+
+///////////////////////////////////////////
 ///////////////////////////////////////////
 
 //SELEZIONE DI ELEMENTI
 //Se vogliamo selezionare una certa parte del codice document.
-console.log(document.body);
-const header = document.querySelector('header');
-const allSelection = document.querySelectorAll('.section');
-
-document.getElementById('section--1');
-const button = document.getElementsByTagName('button');
 
 //Messaggio cookie
 const messaggio = document.createElement('div');
@@ -61,3 +101,31 @@ messaggio.style.width = '120%';
 
 messaggio.style.height =
   Number.parseFloat(getComputedStyle(messaggio).height, 10) + 40 + 'px';
+
+//Tavola cliccabile
+
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+  console.log(clicked);
+
+  //Clausola di guardia --> se non si clicca nulla la funzione finisce
+  if (!clicked) return;
+
+  //remove classi attive
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+  tabsContent.forEach(content =>
+    content.classList.remove('operations__content--active')
+  );
+
+  //tab attiva
+  clicked.classList.add('operations__tab--active');
+
+  //area contenuti attiva
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+});
