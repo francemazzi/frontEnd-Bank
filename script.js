@@ -76,17 +76,54 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 
 //Navigazione sticky
 //Otteniamo le  coordinate dell'area top della pagina
-const coordinateIniziali = section1.getBoundingClientRect();
-window.addEventListener('scroll', function (e) {
-  //Mostra la dinstanza tra il top della pagina e il punto della pagina in alto in pratica ci da un riferimento verticale di dove siamo
-  console.log(window.scrollY);
+// const coordinateIniziali = section1.getBoundingClientRect();
+// window.addEventListener('scroll', function (e) {
+//   //Mostra la dinstanza tra il top della pagina e il punto della pagina in alto in pratica ci da un riferimento verticale di dove siamo
+//   console.log(window.scrollY);
 
-  if (window.scrollY > coordinateIniziali.top) {
+//   if (window.scrollY > coordinateIniziali.top) {
+//     nav.classList.add('sticky');
+//   } else {
+//     nav.classList.remove('sticky');
+//   }
+// });
+
+//Sticky navigation: interesction Observer API
+// //IntersectionObserver() ci permette di osservare un certo target
+// const obsCallBack = function (entries, observer) {
+//   entries.forEach(entry => {
+//     console.log(entry);
+//   });
+// };
+
+// const obsOption = {
+//   root: null,
+//   threshold: 0.1, // --> abbiamo evento solo quando siamo interesseti cioè al 10%
+// };
+
+// const observer = new IntersectionObserver(obsCallBack, obsOption);
+// observer.observe(section1);
+
+//OBSERVER NAVIGATION
+const hdr = document.querySelector('.header');
+const navAltezza = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+  const entry = entries[0];
+  console.log(entry);
+  if (!entry.isIntersecting) {
     nav.classList.add('sticky');
   } else {
     nav.classList.remove('sticky');
   }
+};
+
+const headerObs = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navAltezza}px`,
 });
+headerObs.observe(hdr);
 
 ///////////////////////////////////////////
 ///////////////////////////////////////////
